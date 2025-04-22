@@ -1,0 +1,14 @@
+# Ignore Python virtual environment
+venv/
+
+# Bytecode
+__pycache__/
+*.pyc
+
+# IDE/editor configs
+.vscode/
+.idea/
+
+# Allow these
+!requirements.txt
+!src/
