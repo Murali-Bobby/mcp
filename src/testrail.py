@@ -101,6 +101,60 @@ async def add_test_case(section_id: int, title: str, steps: str = "", expected: 
 
     except Exception as e:
         return {"error": f"TestRail API error: {str(e)}"}
+    
+
+@mcp.tool()
+async def update_test_case(
+    case_id: int,
+    title: str = None,
+    steps: str = None,
+    expected: str = None,
+    type_id: int = None,
+    priority_id: int = None
+) -> dict:
+    """
+    Updates an existing test case in TestRail.
+
+    Args:
+        case_id: ID of the test case to update.
+        title: (Optional) New title for the test case.
+        steps: (Optional) New steps for the test case.
+        expected: (Optional) New expected result.
+        type_id: (Optional) New test case type ID.
+        priority_id: (Optional) New priority ID.
+
+    Returns:
+        A dictionary with the updated test case or an error message.
+    """
+    try:
+        client = get_testrail_client()
+        url = get_testrail_url(f"update_case/{case_id}")
+        
+        payload = {}
+        if title is not None:
+            payload["title"] = title
+        if steps is not None:
+            payload["custom_steps"] = steps
+        if expected is not None:
+            payload["custom_expected"] = expected
+        if type_id is not None:
+            payload["type_id"] = type_id
+        if priority_id is not None:
+            payload["priority_id"] = priority_id
+
+        if not payload:
+            return {"error": "No fields provided to update."}
+
+        response = client.post(url, json=payload)
+
+        if response.status_code != 200:
+            return {"error": f"Failed to update test case: {response.status_code} - {response.text}"}
+
+        return {"message": "Test case updated successfully", "test_case": response.json()}
+
+    except Exception as e:
+        return {"error": f"TestRail API error: {str(e)}"}
+
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
