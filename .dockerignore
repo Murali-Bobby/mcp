@@ -1,0 +1,25 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git and VCS
+.git/
+.gitignore
+
+# Editor folders
+.vscode/
+.idea/
+
+# Test results or logs
+*.log
+*.out
+coverage/
+htmlcov/

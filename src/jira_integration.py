@@ -3,12 +3,9 @@ from typing import Dict, List
 import requests
 from jira import JIRA
 from dotenv import load_dotenv
-from mcp.server.fastmcp import FastMCP
+from src.fastMpc_instance import mcp
 
 load_dotenv()
-
-# Initialize MCP Server
-mcp = FastMCP("testrail-mcp")
 
 # Jira Configuration
 JIRA_URL = os.getenv("JIRA_URL")
@@ -145,5 +142,3 @@ async def get_jira_ticket_details(ticket_id_or_key: str) -> dict:
         return {"error": f"Failed to fetch ticket details: {str(e)}"}
 
 
-if __name__ == "__main__":
-    mcp.run(transport="stdio")

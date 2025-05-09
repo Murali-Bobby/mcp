@@ -3,19 +3,20 @@ import json
 import requests
 from dotenv import load_dotenv
 from typing import Dict
-from mcp.server.fastmcp import FastMCP
+from src.fastMpc_instance import mcp
+
 load_dotenv()
-# Initialize MCP Server
-mcp = FastMCP("testrail-mcp")
 # TestRail API Configuration
-TESTRAIL_URL = "https://platformsciencetest.testrail.io"
+TESTRAIL_URL = os.getenv("TESTRAIL_URL")
 def get_testrail_client():
     session = requests.Session()
     session.headers.update({'Content-Type': 'application/json'})
-    session.auth = ("vrnkmrv@gmail.com", "vV@6269436")  # Use your TestRail username and password
+    session.auth = (os.getenv("TESTRAIL_USERNAME"), os.getenv("TESTRAIL_API_KEY"))  
     return session
+
 def get_testrail_url(endpoint):
     return f"{TESTRAIL_URL}/index.php?/api/v2/{endpoint}"
+
 @mcp.tool()
 async def log_message(message: str) -> str:
     """
@@ -155,6 +156,3 @@ async def update_test_case(
     except Exception as e:
         return {"error": f"TestRail API error: {str(e)}"}
 
-
-if __name__ == "__main__":
-    mcp.run(transport="stdio")
