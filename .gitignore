@@ -8,6 +8,7 @@ __pycache__/
 # IDE/editor configs
 .vscode/
 .idea/
+.env
 
 # Allow these
 !requirements.txt
