@@ -8,7 +8,10 @@ __pycache__/
 # IDE/editor configs
 .vscode/
 .idea/
+
+# Environment variables and configs
 .env
+.backup.json
 
 # Allow these
 !requirements.txt
